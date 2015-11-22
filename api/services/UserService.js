@@ -1,6 +1,7 @@
 var bcrypt = require('bcrypt');
 var User = require('../models/User');
 var passport = require('./PassportService');
+var log = require('./utilities/LogService');
 
 exports.findAllUsers = function() {
 	return new Promise((resolve, reject) => {
@@ -20,6 +21,9 @@ exports.register = function(email, password, callback) {
 	})
 	.save()
 	.then(model => {
+		log.info({
+			message: 'User with email ' + email + ' has registered via email'
+		});
 		callback(null, model);
 	})
 	.catch(error => {
