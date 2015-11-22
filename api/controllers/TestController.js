@@ -1,14 +1,21 @@
-module.exports.ping = function (req, res, next) {
+var Router = require('restify-router').Router;
+var router = new Router();
+
+router.get('/ping', function (req, res, next) {
 	res.send({
 		message: "ping"
 	});
-};
+});
 
-module.exports.echo = function (req, res, next) {
+router.get('/echo/:name', function (req, res, next) {
 	res.send(req.params);
 	return next();
-};
+});
 
-module.exports.throw = function(req, res, next) {
+router.get('/throw', function (req, res, next) {
 	throw 'This was manually thrown';
+});
+
+module.exports = {
+	router: router
 };

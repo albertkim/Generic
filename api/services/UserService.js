@@ -1,15 +1,21 @@
+var bcrypt = require('bcrypt');
 var User = require('../models/User');
+var passport = require('./PassportService');
 
-exports.login = function(email, password) {
-	
-};
-
-exports.register = function(email, password) {
-	var user = new User({
+exports.register = function(email, password, callback) {
+	var salt = bcrypt.genSaltSync(10);
+	var hashedPassword = bcrypt.hashSync(password, salt);
+	new User({
 		email: email,
-		password: password
+		password: hashedPassword
+	})
+	.save()
+	.then(model => {
+		callback(null, model);
+	})
+	.catch(error => {
+		callback(error);
 	});
-	user.save();
 };
 
 exports.update = function(body) {
