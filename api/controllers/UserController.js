@@ -7,24 +7,29 @@ var TokenService = require('../services/utilities/TokenService');
 
 var router = new Router();
 
-router.get('users/all', function (req, res) {
-	PermissionService.isAdmin(req)
-	.then(function() {
-		
-		
-	});
-});
+router.get('users/all', 
+	passport.authenticate('bearer', { session: false }), 
+	function (req, res) {
+		PermissionService.isAdmin(req)
+		.then(function() {
+			
+		});
+	}
+);
 
-router.post('/login/email', passport.authenticate('local', { session: false }), function (req, res) {
-	var user = req.user;
-	AuthTokenService.add(user.get('id'), (error, token) => {
-		if (error) {
-			res.send(500, error);
-		} else {
-			res.send({ token: token });
-		}
-	});
-});
+router.post('/login/email', 
+	passport.authenticate('local', { session: false }), 
+	function (req, res) {
+		var user = req.user;
+		AuthTokenService.add(user.get('id'), (error, token) => {
+			if (error) {
+				res.send(500, error);
+			} else {
+				res.send({ token: token });
+			}
+		});
+	}
+);
 
 router.post('/login/facebook', function (req, res) {
 	passport.authenticate('google-oauth', { 

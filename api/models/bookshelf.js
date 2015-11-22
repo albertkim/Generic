@@ -1,5 +1,11 @@
+var Bookshelf = require('bookshelf');
 var Knex = require('knex');
 var config = require('../../config/database');
 var knex = Knex(config);
 
-module.exports = require('bookshelf')(knex);
+// Using this plugin allows us to refer to models from other models by name
+// This prevents having to load the models for relationships, which can cause circular dependencies
+var bookshelf = Bookshelf(knex);
+bookshelf.plugin('registry')
+
+module.exports = bookshelf;

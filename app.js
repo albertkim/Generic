@@ -11,7 +11,6 @@ server.use(Restify.acceptParser(server.acceptable));
 server.use(Restify.queryParser());
 server.use(Restify.bodyParser());
 server.use(passport.initialize());
-// server.use(passport.authenticate('bearer', { session: false }));
 
 // Routes
 require('./api/controllers/UserController').router.applyRoutes(server, '/api/:version/user');
