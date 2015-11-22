@@ -15,7 +15,6 @@ passport.use(new LocalStrategy({
     session: false
   }, 
   (email, password, done) => {
-    console.log('Authenticating locally');
     new User({ email: email })
     .fetch()
     .then(user => {
@@ -41,7 +40,7 @@ passport.use(new HttpBearerStrategy(
       if (!authToken) {
         done(null, false);
       } else {
-        done(null, authToken.user);
+        done(null, authToken.related('user'));
       }
     })
     .catch(error => {
