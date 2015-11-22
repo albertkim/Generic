@@ -9,7 +9,7 @@ create table user (
 	updatedAt datetime
 );
 
-create table authtoken (
+create table authToken (
 	userId mediumint not null,
 	foreign key (userId) references user (id),
 	token varchar(255),
