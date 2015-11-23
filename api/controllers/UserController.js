@@ -9,12 +9,10 @@ var router = new Router();
 
 router.get('/findAll', 
 	passport.authenticate('bearer', { session: false }),
+	PermissionService.isAdmin,
 	function (req, res) {
-		PermissionService.isAdmin(req, res)
-		.then(function() {
-			UserService.findAllUsers()
-			.then(users => res.send(users.toJSON()));
-		});
+		UserService.findAllUsers()
+		.then(users => res.send(users.toJSON()));
 	}
 );
 
