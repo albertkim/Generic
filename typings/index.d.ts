@@ -1,3 +1,4 @@
+/// <reference path="globals/bcrypt-nodejs/index.d.ts" />
 /// <reference path="globals/body-parser/index.d.ts" />
 /// <reference path="globals/bookshelf/index.d.ts" />
 /// <reference path="globals/express-serve-static-core/index.d.ts" />

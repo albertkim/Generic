@@ -8,13 +8,14 @@ const router = express.Router()
 export default router
 
 router.post('/register',
-  async function(req, res, next) {
+  async function(req: express.Request, res: express.Response, next: express.NextFunction) {
     try {
+
       const email = req.body.email
       const password = req.body.password
       const name = req.body.name
 
-      if (!email || email == '') {
+      if (!email || email == '' || !email.includes('@')) {
         return res.status(400).send({message: 'Email is required'})
       } else if (!password || password == '') {
         return res.status(400).send({message: 'Password is required'})
@@ -28,6 +29,31 @@ router.post('/register',
         }, transaction)
       })
       res.send(userWithToken)
+
+    } catch (error) {
+      next(error)
+    }
+  }
+)
+
+router.post('/login',
+  async function(req: express.Request, res: express.Response, next: express.NextFunction) {
+    try {
+
+      const email = req.body.email
+      const password = req.body.password
+
+      if (!email || email == '' || !email.includes('@')) {
+        return res.status(400).send({message: 'Email is required'})
+      } else if (!password || password == '') {
+        return res.status(400).send({message: 'Password is required'})
+      }
+
+      const userWithToken: UserWithToken = await knex.transaction(transaction => {
+        return UserService.login(email, password, transaction)
+      })
+      res.send(userWithToken)
+
     } catch (error) {
       next(error)
     }

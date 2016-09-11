@@ -8,7 +8,7 @@ const router = express.Router()
 export default router
 
 router.get('/users',
-  async function(req, res, next) {
+  async function(req: express.Request, res: express.Response, next: express.NextFunction) {
     try {
       const users: User[] = await UserService.findAll({}, null)
       res.send({

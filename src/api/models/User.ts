@@ -1,13 +1,15 @@
 export class User {
 
-  public id: Number
-  public email: String
-  public name: String
-  public isAdmin: Boolean
+  public id: number
+  public email: string
+  public password: string
+  public name: string
+  public isAdmin: boolean
 
   constructor(json: any) {
     this.id = json.id
     this.email = json.email
+    this.password = json.password
     this.name = json.name
     this.isAdmin = json.isAdmin
   }
@@ -24,18 +26,18 @@ export class User {
 }
 
 export interface UserSearch {
-  id?: Number,
-  email?: String,
-  isAdmin?: Boolean
+  id?: number,
+  email?: string,
+  isAdmin?: boolean
 }
 
 export interface CreateUser {
-  email: String,
-  password: String,
-  name: String
+  email: string,
+  password: string,
+  name: string
 }
 
 export interface UserWithToken {
   user: User,
-  authToken: String
+  authToken: string
 }
