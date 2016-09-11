@@ -1,6 +1,6 @@
 # Generic-api
 
-A generic API server structure.
+A generic API server structure. Will work well with Generic-web project to create a fully functional authentication web application.
 
 Stack:
 
