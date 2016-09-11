@@ -1,0 +1,14 @@
+{
+  "globalDependencies": {
+    "body-parser": "registry:dt/body-parser#0.0.0+20160619023215",
+    "express": "registry:dt/express#4.0.0+20160708185218",
+    "express-serve-static-core": "registry:dt/express-serve-static-core#4.0.0+20160829034835",
+    "jsonwebtoken": "registry:dt/jsonwebtoken#0.0.0+20160720062725",
+    "knex": "registry:dt/knex#0.0.0+20160819212955",
+    "mocha": "registry:dt/mocha#2.2.5+20160720003353",
+    "mysql": "registry:dt/mysql#0.0.0+20160316155526",
+    "node": "registry:dt/node#6.0.0+20160909174046",
+    "pg": "registry:dt/pg#6.1.0+20160830123815",
+    "supertest": "registry:dt/supertest#1.1.0+20160724070541"
+  }
+}
