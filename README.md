@@ -1,5 +1,6 @@
 # Generic-api
-A basic server structure for my future projects. This is the result after accumulating years of Node knowledge, with carefully considered stack decisions.
+
+A generic API server structure.
 
 Stack:
 
@@ -7,3 +8,11 @@ Stack:
 * Typescript
 * Express
 * Bookshelf + Knex
+
+Features:
+
+* Clustering to increase throughput
+* ORM/DB agnostic repository data access layer
+* HTTP bearer tokens for logged in users
+* Environment variable checking functionality
+* Type checking with Typescript 2.0
