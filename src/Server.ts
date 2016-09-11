@@ -1,6 +1,5 @@
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
-import environment from './api/config/environment'
 import knex from './api/config/knex'
 
 import AdminController from './api/controllers/AdminController'
@@ -16,8 +15,6 @@ export class Server {
   private app: express.Application
 
   constructor(options: ServerOptions) {
-
-    console.log(`Current environment: ${environment.environment}`)
 
     this.port = options.port
     this.app = express()
@@ -49,9 +46,7 @@ export class Server {
   }
 
   run() {
-    this.app.listen(this.port, () => {
-      console.log(`Listening on port ${this.port}`)
-    })
+    this.app.listen(this.port)
   }
 
 }
