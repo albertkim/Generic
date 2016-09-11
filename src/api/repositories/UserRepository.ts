@@ -61,9 +61,11 @@ export default {
   },
 
   create: async function(userObject: CreateUser, transaction: Knex.Transaction) : Promise<User> {
+    const createObject: any = JSON.parse(JSON.stringify(userObject)) // Clone userObject, don't modify it
     // Hash the password
-    userObject.password = bcrypt.hashSync(userObject.password)
-    const result: any = await knex('user').insert(userObject).transacting(transaction)
+    createObject.password = bcrypt.hashSync(userObject.password)
+    createObject.createDate = new Date()
+    const result: any = await knex('user').insert(createObject).transacting(transaction)
     const resultArray = <Array<any>> result
     const userId = resultArray[0]
     const user = await findById(userId, transaction)
@@ -77,7 +79,8 @@ export default {
     }, privateKey)
     await knex('authToken').insert({
       userId: userId,
-      token: token
+      token: token,
+      createDate: new Date()
     }).transacting(transaction)
     return token
   }
