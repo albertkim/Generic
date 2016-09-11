@@ -2,6 +2,7 @@
 /// <reference path="globals/bookshelf/index.d.ts" />
 /// <reference path="globals/express-serve-static-core/index.d.ts" />
 /// <reference path="globals/express/index.d.ts" />
+/// <reference path="globals/http-errors/index.d.ts" />
 /// <reference path="globals/jsonwebtoken/index.d.ts" />
 /// <reference path="globals/knex/index.d.ts" />
 /// <reference path="globals/mocha/index.d.ts" />

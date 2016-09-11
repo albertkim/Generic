@@ -1,6 +1,6 @@
 import * as express from 'express'
 import knex from '../config/knex'
-import {User} from '../models/User'
+import {User, UserWithToken} from '../models/User'
 import UserService from '../services/UserService'
 
 const router = express.Router()
@@ -20,16 +20,14 @@ router.post('/register',
         return res.status(400).send({message: 'Password is required'})
       }
 
-      const user: User = await knex.transaction(transaction => {
-        return UserService.register({
+      const userWithToken: UserWithToken = await knex.transaction(transaction => {
+        return UserService.registerByEmail({
           email: req.body.email,
           password: req.body.password,
           name: req.body.name
         }, transaction)
       })
-      res.send({
-        user: user
-      })
+      res.send(userWithToken)
     } catch (error) {
       next(error)
     }

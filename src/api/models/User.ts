@@ -22,3 +22,20 @@ export class User {
   }
 
 }
+
+export interface UserSearch {
+  id?: Number,
+  email?: String,
+  isAdmin?: Boolean
+}
+
+export interface CreateUser {
+  email: String,
+  password: String,
+  name: String
+}
+
+export interface UserWithToken {
+  user: User,
+  authToken: String
+}

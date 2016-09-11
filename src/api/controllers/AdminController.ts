@@ -1,6 +1,6 @@
 import * as express from 'express'
 import knex from '../config/knex'
-import {User} from '../models/User'
+import {User, CreateUser, UserSearch} from '../models/User'
 import UserService from '../services/UserService'
 
 const router = express.Router()
