@@ -1,7 +1,9 @@
 import * as express from 'express'
 import knex from '../config/knex'
-import {User, UserWithToken} from '../models/User'
-import UserService from '../services/UserService'
+import {User, UpdateUser, UserWithToken} from '../models/User'
+import {LoginUserService, RegisterUserService} from '../services/UserService'
+import {AuthMiddleware} from './AuthMiddleware'
+import {CustomRequest} from '../models/CustomRequest'
 
 const router = express.Router()
 
@@ -22,7 +24,7 @@ router.post('/register',
       }
 
       const userWithToken: UserWithToken = await knex.transaction(transaction => {
-        return UserService.registerByEmail({
+        return RegisterUserService.registerByEmail({
           email: req.body.email,
           password: req.body.password,
           name: req.body.name
@@ -39,7 +41,6 @@ router.post('/register',
 router.post('/login',
   async function(req: express.Request, res: express.Response, next: express.NextFunction) {
     try {
-
       const email = req.body.email
       const password = req.body.password
 
@@ -48,12 +49,28 @@ router.post('/login',
       } else if (!password || password == '') {
         return res.status(400).send({message: 'Password is required'})
       }
-
+      
       const userWithToken: UserWithToken = await knex.transaction(transaction => {
-        return UserService.login(email, password, transaction)
+        return LoginUserService.login(email, password, transaction)
       })
       res.send(userWithToken)
 
+    } catch (error) {
+      next(error)
+    }
+  }
+)
+
+router.patch('/me',
+  AuthMiddleware.isLoggedIn,
+  async function(req: CustomRequest, res: express.Response, next: express.NextFunction) {
+    try {
+      const updateUser: UpdateUser = {
+        id: req.user.id
+      }
+      if ('phone' in req.body) { updateUser.phone = req.body.phone }
+      if ('name' in req.body) { updateUser.name = req.body.name }
+      
     } catch (error) {
       next(error)
     }

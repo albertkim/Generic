@@ -4,7 +4,10 @@ export class User {
   public email: string
   public password: string
   public name: string
+  public phone: string
   public isAdmin: boolean
+  public isEmailVerified: boolean
+  public isPhoneVerified: boolean
 
   constructor(json: any) {
     this.id = json.id
@@ -18,7 +21,10 @@ export class User {
     return {
       id: this.id,
       email: this.email,
+      isEmailVerified: this.isEmailVerified,
       name: this.name,
+      phone: this.phone,
+      isPhoneVerified: this.isPhoneVerified,
       isAdmin: this.isAdmin
     }
   }
@@ -35,6 +41,12 @@ export interface CreateUser {
   email: string,
   password: string,
   name: string
+}
+
+export interface UpdateUser {
+  id: number,
+  phone?: string,
+  name?: string
 }
 
 export interface UserWithToken {

@@ -1,14 +1,18 @@
 import * as Knex from 'knex'
 import * as createError from 'http-errors'
-import {User, CreateUser, UserSearch, UserWithToken} from '../models/User'
+import {User, CreateUser, UpdateUser, UserSearch, UserWithToken} from '../models/User'
 import UserRepository from '../repositories/UserRepository'
 
-export default {
+export const FindUserService = {
 
   findAll: async function(searchObject: UserSearch, transaction: Knex.Transaction) : Promise<User[]> {
     const users = await UserRepository.findAll(searchObject, transaction)
     return users
-  },
+  }
+
+}
+
+export const RegisterUserService = {
 
   registerByEmail: async function(userObject: CreateUser, transaction: Knex.Transaction) : Promise<UserWithToken> {
     const existingUser = await UserRepository.findByEmail(userObject.email, transaction)
@@ -23,7 +27,11 @@ export default {
       user: user,
       authToken: token
     }
-  },
+  }
+
+}
+
+export const LoginUserService = {
 
   login: async function(email: string, password: string, transaction: Knex.Transaction) : Promise<UserWithToken> {
     const user = await UserRepository.getByEmailAndPassword(email, password, transaction)
@@ -32,6 +40,14 @@ export default {
       user: user,
       authToken: token
     }
+  }
+
+}
+
+export const UpdateUserService = {
+
+  update: async function(updateUser: UpdateUser, transaction: Knex.Transaction) : Promise<User> {
+    return null
   }
 
 }

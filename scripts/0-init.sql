@@ -1,6 +1,9 @@
 create table user (
 	id mediumint primary key not null auto_increment,
 	email varchar(100) unique not null,
+	isEmailVerified tinyint(1) not null default 0,
+	phone varchar(50) not null,
+	isPhoneVerified tinyint(1) not null default 0,
 	password varchar(100) not null,
 	facebookId varchar(50),
 	googleId varchar(50),
