@@ -6,7 +6,7 @@
   "scripts": {
     "setup": "node setup.js",
     "start": "ts-node src/app.ts",
-    "build": "typings install && rimraf build && tsc",
+    "build": "tsc --version && typings install && rimraf build && tsc",
     "debug": "npm run build && node build/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "init:localhost": "node scripts/initDatabase localhost"
@@ -19,14 +19,12 @@
     "bunyan": "^1.5.1",
     "chai": "^3.4.1",
     "dotenv": "^2.0.0",
-    "eslint": "^3.2.2",
     "express": "^4.14.0",
     "jsonwebtoken": "^5.4.1",
     "knex": "^0.9.0",
     "mocha": "^2.3.4",
     "mysql": "^2.11.1",
     "mysql-promise": "^3.1.0",
-    "pg": "^4.4.3",
     "rimraf": "^2.5.4",
     "supertest": "^1.1.0",
     "ts-node": "^1.3.0",
