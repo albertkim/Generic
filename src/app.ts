@@ -6,7 +6,7 @@ import {Server} from './Server'
 import environment from './api/config/environment'
 
 const numberOfCPUs = os.cpus().length
-const port = 80
+const port = 81
 
 if (cluster.isMaster) {
 

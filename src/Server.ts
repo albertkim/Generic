@@ -4,6 +4,7 @@ import knex from './api/config/knex'
 
 import AdminController from './api/controllers/AdminController'
 import UserController from './api/controllers/UserController'
+import LoginRegisterController from './api/controllers/LoginRegisterController'
 
 interface ServerOptions {
   port: number
@@ -23,7 +24,7 @@ export class Server {
     this.app.use(bodyParser.urlencoded({extended: true}))
     this.app.use(function(req: express.Request, res: express.Response, next: express.NextFunction) {
       res.header('Access-Control-Allow-Origin', '*')
-      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, access_token, Authorization')
+      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, access_token, Authorization, Authentication')
       res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE')
       next()
     })
@@ -34,8 +35,9 @@ export class Server {
       })
     })
 
-    this.app.use('/admin', AdminController)
-    this.app.use('/user', UserController)
+    this.app.use('/api/:version', LoginRegisterController)
+    this.app.use('/api/:version/admin', AdminController)
+    this.app.use('/api/:version/user', UserController)
 
     this.app.use(function(error: any, req: express.Request, res: express.Response, next: express.NextFunction) {
       console.log(error)
