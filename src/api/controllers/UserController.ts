@@ -9,6 +9,13 @@ const router = express.Router()
 
 export default router
 
+router.get('/me',
+  AuthMiddleware.isLoggedIn,
+  async function(req: CustomRequest, res: express.Response, next: express.NextFunction) {
+    res.send(req.user)
+  }
+)
+
 router.patch('/me',
   AuthMiddleware.isLoggedIn,
   async function(req: CustomRequest, res: express.Response, next: express.NextFunction) {

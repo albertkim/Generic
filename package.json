@@ -6,7 +6,7 @@
   "scripts": {
     "setup": "node setup.js",
     "start": "ts-node src/app.ts",
-    "build": "rimraf build && tsc",
+    "build": "typings install && rimraf build && tsc",
     "debug": "npm run build && node build/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "init:localhost": "node scripts/initDatabase localhost"

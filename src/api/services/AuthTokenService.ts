@@ -5,7 +5,7 @@ import * as createError from 'http-errors'
 export const AuthTokenService = {
 
   getUserFromToken: async function(authToken: string) : Promise<User> {
-    const subQuery = knex('authToken').where('token', authToken)
+    const subQuery = knex('authToken').where('token', authToken).select('userId')
     const response = await knex('user').where('id', 'in', subQuery)
     const userObjectArray = response as any as Array<any>
     if (userObjectArray.length > 0) {

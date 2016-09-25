@@ -15,6 +15,7 @@ export const AuthMiddleware = {
       const bearerToken = authorizationHeader.replace('bearer ', '').replace('Bearer ', '')
       const user = await AuthTokenService.getUserFromToken(bearerToken)
       req.user = user
+      next()
     } catch (error) {
       next(error)
     }

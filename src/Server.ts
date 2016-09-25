@@ -20,6 +20,10 @@ export class Server {
     this.port = options.port
     this.app = express()
 
+    this.app.use((req, res, next) => {
+      console.log(`${req.method} ${req.url}`)
+      next()
+    })
     this.app.use(bodyParser.json())
     this.app.use(bodyParser.urlencoded({extended: true}))
     this.app.use(function(req: express.Request, res: express.Response, next: express.NextFunction) {
