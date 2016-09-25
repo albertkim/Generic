@@ -1,16 +1,16 @@
-import * as express from 'express'
+import {Router} from 'express'
 import knex from '../config/knex'
 import {User, CreateUser, UserSearch} from '../models/User'
 import {FindUserService} from '../services/UserService'
 
-const router = express.Router()
+const router = Router()
 
 export default router
 
 router.get('/users',
-  async function(req: express.Request, res: express.Response, next: express.NextFunction) {
+  async function(req, res, next) {
     try {
-      const users: User[] = await FindUserService.findAll({}, undefined)
+      const users: User[] = await FindUserService.findAll({})
       res.send({
         users: users
       })

@@ -1,16 +1,16 @@
-import * as express from 'express'
+import {Router} from 'express'
 import knex from '../config/knex'
 import {User, UpdateUser, UserWithToken} from '../models/User'
 import {LoginUserService, RegisterUserService} from '../services/UserService'
 import {AuthMiddleware} from './AuthMiddleware'
 import {CustomRequest} from '../models/CustomRequest'
 
-const router = express.Router()
+const router = Router()
 
 export default router
 
 router.post('/register',
-  async function(req: express.Request, res: express.Response, next: express.NextFunction) {
+  async function(req, res, next) {
     try {
 
       const email = req.body.email
@@ -39,7 +39,7 @@ router.post('/register',
 )
 
 router.post('/login',
-  async function(req: express.Request, res: express.Response, next: express.NextFunction) {
+  async function(req, res, next) {
     try {
       const email = req.body.email
       const password = req.body.password

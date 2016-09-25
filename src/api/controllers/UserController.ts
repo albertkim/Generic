@@ -1,24 +1,24 @@
-import * as express from 'express'
+import {Response, NextFunction, Router} from 'express'
 import knex from '../config/knex'
 import {User, UpdateUser, UserWithToken} from '../models/User'
 import {LoginUserService, RegisterUserService} from '../services/UserService'
 import {AuthMiddleware} from './AuthMiddleware'
 import {CustomRequest} from '../models/CustomRequest'
 
-const router = express.Router()
+const router = Router()
 
 export default router
 
 router.get('/me',
   AuthMiddleware.isLoggedIn,
-  async function(req: CustomRequest, res: express.Response, next: express.NextFunction) {
+  async function(req: CustomRequest, res: Response, next: NextFunction) {
     res.send(req.user)
   }
 )
 
 router.patch('/me',
   AuthMiddleware.isLoggedIn,
-  async function(req: CustomRequest, res: express.Response, next: express.NextFunction) {
+  async function(req: CustomRequest, res: Response, next: NextFunction) {
     try {
       const updateUser: UpdateUser = {
         id: req.user.id
