@@ -1,15 +1,17 @@
 {
   "compilerOptions": {
-    "target": "es2015",
+    "target": "es6",
     "module": "commonjs",
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
-    "rootDir": "src/",
-    "outDir": "build/",
+    "rootDir": "src",
+    "outDir": "build",
     "sourceMap": true
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "build",
+    "typings"
   ]
 }

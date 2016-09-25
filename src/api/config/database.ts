@@ -1,5 +1,3 @@
-import environment from './environment'
-
 interface ConnectionConfig {
   host: String,
   user: String,
@@ -13,23 +11,15 @@ interface DatabaseConfig {
   connection: ConnectionConfig
 }
 
-const developmentConfig: DatabaseConfig = {
-  client: 'mysql',
-  connection: {
-    host     : '127.0.0.1',
-    user     : 'root',
-    password : 'password',
-    database : 'generic',
-    charset  : 'utf8'
-  }
-}
-
 let environmentDatabaseConfig: DatabaseConfig
 
-if (environment.isDevelopment) {
-  environmentDatabaseConfig = developmentConfig
-} else {
-  throw new Error('Not implemeneted yet')
-}
-
-export default environmentDatabaseConfig
+export default {
+  client: process.env.DATABASE_CLIENT,
+  connection: {
+    host     : process.env.DATABASE_HOST,
+    user     : process.env.DATABASE_USER,
+    password : process.env.DATABASE_PASSWORD,
+    database : process.env.DATABASE_DATABASE,
+    charset  : 'utf8'
+  }
+} as DatabaseConfig

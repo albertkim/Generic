@@ -1,9 +1,12 @@
-/// <reference path="../typings/index.d.ts"/>
+///<reference path="../typings/index.d.ts"/>
 
 import * as cluster from 'cluster'
 import * as os from 'os'
+import * as dotenv from 'dotenv'
 import {Server} from './Server'
 import environment from './api/config/environment'
+
+dotenv.config()
 
 const numberOfCPUs = os.cpus().length
 const port = 81
