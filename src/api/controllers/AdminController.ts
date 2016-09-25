@@ -10,7 +10,7 @@ export default router
 router.get('/users',
   async function(req: express.Request, res: express.Response, next: express.NextFunction) {
     try {
-      const users: User[] = await FindUserService.findAll({}, null)
+      const users: User[] = await FindUserService.findAll({}, undefined)
       res.send({
         users: users
       })

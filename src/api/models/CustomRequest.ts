@@ -3,6 +3,6 @@ import {User} from '../models/User'
 
 export interface CustomRequest extends Express.Request {
 
-  user?: User
+  user: User
 
 }

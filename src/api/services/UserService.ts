@@ -5,7 +5,7 @@ import UserRepository from '../repositories/UserRepository'
 
 export const FindUserService = {
 
-  findAll: async function(searchObject: UserSearch, transaction: Knex.Transaction) : Promise<User[]> {
+  findAll: async function(searchObject: UserSearch, transaction?: Knex.Transaction) : Promise<User[]> {
     const users = await UserRepository.findAll(searchObject, transaction)
     return users
   }
@@ -14,7 +14,7 @@ export const FindUserService = {
 
 export const RegisterUserService = {
 
-  registerByEmail: async function(userObject: CreateUser, transaction: Knex.Transaction) : Promise<UserWithToken> {
+  registerByEmail: async function(userObject: CreateUser, transaction?: Knex.Transaction) : Promise<UserWithToken> {
     const existingUser = await UserRepository.findByEmail(userObject.email, transaction)
     if (existingUser) {
       throw createError(401, `Email ${userObject.email} already exists`)
@@ -33,7 +33,7 @@ export const RegisterUserService = {
 
 export const LoginUserService = {
 
-  login: async function(email: string, password: string, transaction: Knex.Transaction) : Promise<UserWithToken> {
+  login: async function(email: string, password: string, transaction?: Knex.Transaction) : Promise<UserWithToken> {
     const user = await UserRepository.getByEmailAndPassword(email, password, transaction)
     const token = await UserRepository.createAuthToken(user.id, transaction)
     return {
@@ -46,8 +46,8 @@ export const LoginUserService = {
 
 export const UpdateUserService = {
 
-  update: async function(updateUser: UpdateUser, transaction: Knex.Transaction) : Promise<User> {
-    return null
+  update: async function(updateUser: UpdateUser, transaction: Knex.Transaction) : Promise<User|undefined> {
+    return undefined
   }
 
 }
