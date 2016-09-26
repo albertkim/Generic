@@ -5,3 +5,6 @@ notifications:
 before_install:
   - npm install
   - npm run build
+deploy:
+  provider: azure_web_apps
+  verbose: true
