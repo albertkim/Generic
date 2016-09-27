@@ -1,4 +1,2 @@
-echo Deploying files...
-echo Node version
-node --version
-node build/app.js
+[config]
+command = deploy.cmd
