@@ -105,9 +105,6 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   popd
 )
 
-:: 4. Run
-call :ExecuteCmd !NPM_CMD! build/app.js
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 goto end
 
