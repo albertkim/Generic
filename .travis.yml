@@ -7,4 +7,5 @@ before_install:
   - npm run build
 deploy:
   provider: azure_web_apps
+  skip_cleanup: true
   verbose: true
