@@ -3,7 +3,7 @@ import * as os from 'os'
 import * as dotenv from 'dotenv'
 import * as knex from 'knex'
 import {Server} from './Server'
-import environment from './api/config/environment'
+import environment from './config/environment'
 
 dotenv.config()
 

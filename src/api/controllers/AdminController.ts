@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import knex from '../config/knex'
+import knex from '../../config/knex'
 import {User, CreateUser, UserSearch} from '../models/User'
 import {FindUserService} from '../services/UserService'
 

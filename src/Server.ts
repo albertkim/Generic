@@ -1,6 +1,6 @@
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
-import knex from './api/config/knex'
+import knex from './config/knex'
 
 import AdminController from './api/controllers/AdminController'
 import UserController from './api/controllers/UserController'
