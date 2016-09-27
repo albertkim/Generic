@@ -51,5 +51,8 @@
   "bugs": {
     "url": "https://github.com/albertkim/Generic/issues"
   },
-  "homepage": "https://github.com/albertkim/Generic#readme"
+  "homepage": "https://github.com/albertkim/Generic#readme",
+  "engines":{
+    "node": "6.6.0"
+  }
 }
