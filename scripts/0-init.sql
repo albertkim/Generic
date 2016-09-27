@@ -12,10 +12,25 @@ create table user (
 	createDate datetime not null
 );
 
-create table authToken (
+create table auth_token (
 	userId mediumint not null,
 	foreign key (userId) references user (id),
 	token varchar(255) not null,
   createDate datetime not null,
 	PRIMARY KEY (userId, token)
+);
+
+create table notification_preferences (
+	id mediumint primary key not null auto_increment,
+	name varchar(255) not null,
+	category varchar(255) not null,
+	defaultValue tinyint(1) not null
+);
+
+create table user_notification_preferences (
+	notificationPreferenceId mediumint not null,
+	foreign key (notificationPreferenceId) references notification_preferences (id),
+	userId mediumint not null,
+	foreign key (userId) references user (id),
+	value tinyint(1) not null
 );

@@ -3,7 +3,7 @@ import * as createError from 'http-errors'
 import * as bcrypt from 'bcrypt-nodejs'
 import {User, CreateUser, UserSearch} from '../models/User'
 import * as Knex from 'knex'
-import knex from '../config/knex'
+import knex from '../../config/knex'
 
 const privateKey = 'genericPrivateKey'
 
@@ -11,7 +11,7 @@ async function findById(userId: number, transaction?: Knex.Transaction) : Promis
   const query = knex('user').where('id', userId)
   const result: any = transaction ? await query.transacting(transaction) : await query
   const resultArray = <Array<any>> result
-  if (resultArray.length == 0) {
+  if (resultArray.length === 0) {
     return undefined
   } else {
     return new User(resultArray[0])
@@ -31,7 +31,7 @@ async function findByEmail(email: string, transaction?: Knex.Transaction) : Prom
   const query = knex('user').where('email', email)
   const result: any = transaction ? await query.transacting(transaction) : await query
   const resultArray = <Array<any>> result
-  if (resultArray.length == 0) {
+  if (resultArray.length === 0) {
     return undefined
   } else {
     return new User(resultArray[0])
@@ -46,7 +46,9 @@ export default {
 
   getById: getById,
 
-  getByEmailAndPassword: async function(email: string, password: string, transaction?: Knex.Transaction) : Promise<User> {
+  getByEmailAndPassword: async function(email: string, 
+                                        password: string, 
+                                        transaction?: Knex.Transaction) : Promise<User> {
     const user = await findByEmail(email, transaction)
     if (!user || !bcrypt.compareSync(password, user.password)) {
       throw createError(401, 'Incorrect email or password')

@@ -1,5 +1,5 @@
 import {Response, NextFunction, Router} from 'express'
-import knex from '../config/knex'
+import knex from '../../config/knex'
 import {User, UpdateUser, UserWithToken} from '../models/User'
 import {LoginUserService, RegisterUserService} from '../services/UserService'
 import {AuthMiddleware} from './AuthMiddleware'
