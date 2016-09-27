@@ -5,7 +5,7 @@
   "main": "src/app.ts",
   "scripts": {
     "setup": "node setup.js",
-    "start": "node build/app.ts",
+    "start": "node build/app.js",
     "build": "rimraf build && tsc",
     "debug": "npm run build && node build/app.js",
     "test": "",
