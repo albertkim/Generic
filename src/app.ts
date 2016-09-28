@@ -8,7 +8,7 @@ import environment from './config/environment'
 dotenv.config()
 
 const numberOfCPUs = os.cpus().length
-const port = 81
+const port = 80
 
 if (cluster.isMaster) {
 
