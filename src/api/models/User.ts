@@ -21,11 +21,11 @@ export class User {
     return {
       id: this.id,
       email: this.email,
-      isEmailVerified: this.isEmailVerified,
+      isEmailVerified: !!this.isEmailVerified,
       name: this.name,
       phone: this.phone,
-      isPhoneVerified: this.isPhoneVerified,
-      isAdmin: this.isAdmin
+      isPhoneVerified: !!this.isPhoneVerified,
+      isAdmin: !!this.isAdmin
     }
   }
 

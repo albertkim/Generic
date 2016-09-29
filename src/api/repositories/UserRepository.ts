@@ -1,7 +1,7 @@
 import * as jwt from 'jsonwebtoken'
 import * as createError from 'http-errors'
 import * as bcrypt from 'bcrypt-nodejs'
-import {User, CreateUser, UserSearch} from '../models/User'
+import {User, CreateUser, UpdateUser, UserSearch} from '../models/User'
 import * as Knex from 'knex'
 import knex from '../../config/knex'
 
@@ -57,7 +57,7 @@ export default {
     }
   },
 
-  findAll: async function(searchObject: UserSearch, transaction?: Knex.Transaction) : Promise<User[]> {
+  findAll: async function(searchObject: UserSearch, transaction?: Knex.Transaction): Promise<User[]> {
     const query = knex('user')
     const result: any = transaction ? await query.transacting(transaction) : await query
     const resultArray = <Array<any>> result
@@ -65,7 +65,7 @@ export default {
     return users
   },
 
-  create: async function(userObject: CreateUser, transaction?: Knex.Transaction) : Promise<User> {
+  create: async function(userObject: CreateUser, transaction?: Knex.Transaction): Promise<User> {
     const createObject: any = JSON.parse(JSON.stringify(userObject)) // Clone userObject, don't modify it
     // Hash the password
     createObject.password = bcrypt.hashSync(userObject.password)
@@ -77,8 +77,8 @@ export default {
     const user = await getById(userId, transaction)
     return user
   },
-  
-  createAuthToken: async function(userId: Number, transaction?: Knex.Transaction) : Promise<string> {
+
+  createAuthToken: async function(userId: Number, transaction?: Knex.Transaction): Promise<string> {
     const token = jwt.sign({
       userId: userId,
       createDate: new Date()
@@ -88,8 +88,14 @@ export default {
       token: token,
       createDate: new Date()
     })
-    transaction ? await query.transacting(transaction) : await query
+    transaction ? await query.transacting(transaction): await query
     return token
+  },
+
+  updateUser: async function(updateObject: UpdateUser, transaction?: Knex.Transaction) {
+    const query = knex('user').where('id', updateObject.id).update(updateObject)
+    transaction ? await query.transacting(transaction): await query
+    return await getById(updateObject.id)
   }
 
 }

@@ -12,7 +12,7 @@ create table user (
 	createDate datetime not null
 );
 
-create table auth_token (
+create table authToken (
 	userId mediumint not null,
 	foreign key (userId) references user (id),
 	token varchar(255) not null,
@@ -20,16 +20,21 @@ create table auth_token (
 	PRIMARY KEY (userId, token)
 );
 
-create table notification_preferences (
+create table notificationPreferences (
 	id mediumint primary key not null auto_increment,
 	name varchar(255) not null,
 	category varchar(255) not null,
 	defaultValue tinyint(1) not null
 );
 
-create table user_notification_preferences (
+insert into notificationPreferences (name, category, defaultValue)
+	values ('Receive marketing emails', 'Email', 1);
+insert into notificationPreferences (name, category, defaultValue)
+	values ('Receive new product emails', 'Email', 1);
+
+create table userNotificationPreferences (
 	notificationPreferenceId mediumint not null,
-	foreign key (notificationPreferenceId) references notification_preferences (id),
+	foreign key (notificationPreferenceId) references notificationPreferences (id),
 	userId mediumint not null,
 	foreign key (userId) references user (id),
 	value tinyint(1) not null

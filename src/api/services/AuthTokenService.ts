@@ -2,7 +2,7 @@ import {User} from '../models/User'
 import knex from '../../config/knex'
 import * as createError from 'http-errors'
 
-const authTokenColumn = 'auth_token'
+const authTokenColumn = 'authToken'
 
 export const AuthTokenService = {
 
