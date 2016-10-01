@@ -14,7 +14,10 @@ export class User {
     this.email = json.email
     this.password = json.password
     this.name = json.name
+    this.phone = json.phone
     this.isAdmin = json.isAdmin
+    this.isEmailVerified = json.isEmailVerified
+    this.isPhoneVerified = json.isPhoneVerified
   }
 
   toJSON(): any {
