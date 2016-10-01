@@ -1,6 +1,7 @@
 create table user (
 	id mediumint primary key not null auto_increment,
 	email varchar(100) unique not null,
+	name varchar(100),
 	isEmailVerified tinyint(1) not null default 0,
 	phone varchar(255),
 	phoneCountryCode varchar(50),
@@ -15,7 +16,15 @@ create table user (
 create table authToken (
 	userId mediumint not null,
 	foreign key (userId) references user (id),
-	token varchar(255) not null,
+	token varchar(255) not null unique,
+  createDate datetime not null,
+	PRIMARY KEY (userId, token)
+);
+
+create table emailVerification (
+	userId mediumint not null,
+	foreign key (userId) references user (id),
+	token varchar(255) not null unique,
   createDate datetime not null,
 	PRIMARY KEY (userId, token)
 );

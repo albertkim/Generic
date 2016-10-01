@@ -9,7 +9,7 @@ const privateKey = 'genericPrivateKey'
 
 export const AuthTokenService = {
 
-  getUserFromToken: async function(authToken: string) : Promise<User> {
+  getUserFromToken: async function(authToken: string): Promise<User> {
     const subQuery = knex(authTokenColumn).where('token', authToken).select('userId')
     const response = await knex('user').where('id', 'in', subQuery)
     const userObjectArray = response as any as Array<any>
@@ -29,7 +29,7 @@ export const AuthTokenService = {
       userId: userId,
       token: token,
       createDate: new Date()
-    })
+    }).transacting(transaction)
     return token
   },
 

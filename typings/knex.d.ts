@@ -20,7 +20,7 @@ interface Knex extends Knex.QueryInterface {
     __knex__: string;
 
     raw: Knex.RawBuilder;
-    transaction: <R>(transactionScope: ((trx: Knex.Transaction) => void)) => Promise<any>;
+    transaction: <R>(transactionScope: ((trx: Knex.Transaction) => void)) => Promise<R>;
     destroy(callback: Function): void;
     destroy(): Promise<void>;
 

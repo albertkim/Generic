@@ -24,12 +24,12 @@ async function getById(userId: number, transaction?: Knex.Transaction): Promise<
   }
 }
 
-async function findByEmail(email: string, transaction?: Knex.Transaction): Promise<User|undefined> {
+async function findByEmail(email: string, transaction?: Knex.Transaction): Promise<User|null> {
   const query = knex('user').where('email', email)
   const result: any = transaction ? await query.transacting(transaction) : await query
   const resultArray = <Array<any>> result
   if (resultArray.length === 0) {
-    return undefined
+    return null
   } else {
     return new User(resultArray[0])
   }
@@ -43,8 +43,8 @@ export default {
 
   getById: getById,
 
-  getByEmailAndPassword: async function(email: string, 
-                                        password: string, 
+  getByEmailAndPassword: async function(email: string,
+                                        password: string,
                                         transaction?: Knex.Transaction): Promise<User> {
     const user = await findByEmail(email, transaction)
     if (!user || !bcrypt.compareSync(password, user.password)) {
@@ -68,9 +68,8 @@ export default {
     createObject.password = bcrypt.hashSync(userObject.password)
     createObject.createDate = new Date()
     const query = knex('user').insert(createObject)
-    const result: any = transaction ? await query.transacting(transaction) : await query
-    const resultArray = <Array<any>> result
-    const userId = resultArray[0]
+    const result: any[] = await query.transacting(transaction)
+    const userId = result[0]
     const user = await getById(userId, transaction)
     return user
   },

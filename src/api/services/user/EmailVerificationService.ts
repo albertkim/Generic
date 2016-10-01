@@ -1,18 +1,24 @@
-import * as jwt from 'jsonwebtoken'
 import * as Knex from 'knex'
 import * as createError from 'http-errors'
 import knex from '../../../config/knex'
 import {User} from '../../models/User'
 import {EmailService} from '../email/EmailService'
+import {RandomNumberService} from '../../utilities/RandomNumberService'
 
 const emailVerificationTable = 'emailVerification'
 
 function generateToken(): string {
-  return 'asdf'
+  return RandomNumberService.getRandomString(16)
 }
 
 async function sendEmail(user: User, token: string) {
-  await EmailService.sendToUser(user, 'EmailVerification')
+  await EmailService.sendToUser(user, {
+    template: 'VerifyEmail',
+    user: user,
+    payload: {
+      url: `${process.env.WEB_URL}/verifyEmail?token=${token}`
+    }
+  })
 }
 
 export const EmailVerificationService = {
@@ -23,16 +29,17 @@ export const EmailVerificationService = {
     if (result.length > 0) {
 
       const token = result[0].token as string
-      sendEmail(user, token)
+      await sendEmail(user, token)
 
     } else {
 
       const token = generateToken()
       await knex(emailVerificationTable).insert({
         userId: user.id,
-        token: token
+        token: token,
+        createDate: new Date()
       }).transacting(transaction)
-      sendEmail(user, token)
+      await sendEmail(user, token)
 
     }
   },
