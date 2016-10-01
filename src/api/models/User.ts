@@ -45,7 +45,9 @@ export interface CreateUser {
 
 export interface UpdateUser {
   id: number,
+  isEmailVerified?: boolean
   phone?: string,
+  isPhoneVerified?: boolean
   name?: string
 }
 

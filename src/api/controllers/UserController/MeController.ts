@@ -1,8 +1,6 @@
 import {Response, NextFunction, Router} from 'express'
 import knex from '../../../config/knex'
-import {User, UpdateUser, UserWithToken} from '../../models/User'
-import {LoginUserService} from '../../services/user/LoginUserService'
-import {RegisterUserService} from '../../services/user/RegisterUserService'
+import {User, UpdateUser} from '../../models/User'
 import {UserNotificationPreferenceService} from '../../services/NotificationPreferenceService'
 import {AuthMiddleware} from '../AuthMiddleware'
 import {CustomRequest} from '../../models/CustomRequest'
@@ -36,7 +34,7 @@ router.patch('/',
       }
       if ('phone' in req.body) { updateUser.phone = req.body.phone }
       if ('name' in req.body) { updateUser.name = req.body.name }
-      
+
     } catch (error) {
       next(error)
     }

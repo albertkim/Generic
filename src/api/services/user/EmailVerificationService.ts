@@ -3,6 +3,8 @@ import * as createError from 'http-errors'
 import knex from '../../../config/knex'
 import {User} from '../../models/User'
 import {EmailService} from '../email/EmailService'
+import {FindUserService} from './FindUserService'
+import {UpdateUserService} from './UpdateUserService'
 import {RandomNumberService} from '../../utilities/RandomNumberService'
 
 const emailVerificationTable = 'emailVerification'
@@ -51,6 +53,11 @@ export const EmailVerificationService = {
       throw createError(401, 'Invalid email verification token')
     }
     const userId: number = result[0].userId
+
+    await UpdateUserService.update({
+      id: userId,
+      isEmailVerified: true
+    }, transaction)
 
     // If token is correct, delete all tokens from this user
     await knex(emailVerificationTable).where('userId', userId).del().transacting(transaction)
