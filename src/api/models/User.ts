@@ -17,7 +17,7 @@ export class User {
     this.isAdmin = json.isAdmin
   }
 
-  toJSON() : any {
+  toJSON(): any {
     return {
       id: this.id,
       email: this.email,

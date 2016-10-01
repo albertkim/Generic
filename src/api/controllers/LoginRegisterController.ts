@@ -3,7 +3,6 @@ import knex from '../../config/knex'
 import {UserWithToken} from '../models/User'
 import {RegisterUserService} from '../services/user/RegisterUserService'
 import {LoginUserService} from '../services/user/LoginUserService'
-import {CustomRequest} from '../models/CustomRequest'
 
 const router = Router()
 

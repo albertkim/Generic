@@ -3,7 +3,6 @@ import * as createError from 'http-errors'
 import knex from '../../../config/knex'
 import {User} from '../../models/User'
 import {EmailService} from '../email/EmailService'
-import {FindUserService} from './FindUserService'
 import {UpdateUserService} from './UpdateUserService'
 import {RandomNumberService} from '../../utilities/RandomNumberService'
 
@@ -27,7 +26,7 @@ export const EmailVerificationService = {
 
   createAndSendTokenEmail: async function(user: User, transaction: Knex.Transaction) {
     // Check if an email verification token already exists.
-    const result: any[] = await knex(emailVerificationTable).where('userId', user.id)
+    const result: any[] = await knex(emailVerificationTable).where('userId', user.id).transacting(transaction)
     if (result.length > 0) {
 
       const token = result[0].token as string

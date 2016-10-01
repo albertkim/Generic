@@ -75,8 +75,7 @@ export default {
   },
 
   updateUser: async function(updateObject: UpdateUser, transaction: Knex.Transaction) {
-    const query = knex('user').where('id', updateObject.id).update(updateObject)
-    transaction ? await query.transacting(transaction): await query
+    await knex('user').where('id', updateObject.id).update(updateObject)
     return await getById(updateObject.id)
   }
 
