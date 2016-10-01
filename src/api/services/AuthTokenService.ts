@@ -1,8 +1,11 @@
+import * as jwt from 'jsonwebtoken'
+import * as Knex from 'knex'
+import * as createError from 'http-errors'
 import {User} from '../models/User'
 import knex from '../../config/knex'
-import * as createError from 'http-errors'
 
 const authTokenColumn = 'authToken'
+const privateKey = 'genericPrivateKey'
 
 export const AuthTokenService = {
 
@@ -15,6 +18,19 @@ export const AuthTokenService = {
     } else {
       throw createError(401, 'Invalid http bearer token')
     }
-  }
+  },
+
+  createAuthToken: async function(userId: Number, transaction: Knex.Transaction): Promise<string> {
+    const token = jwt.sign({
+      userId: userId,
+      createDate: new Date()
+    }, privateKey)
+    await knex('authToken').insert({
+      userId: userId,
+      token: token,
+      createDate: new Date()
+    })
+    return token
+  },
 
 }

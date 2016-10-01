@@ -1,23 +1,24 @@
 import {Response, NextFunction, Router} from 'express'
-import knex from '../../config/knex'
-import {User, UpdateUser, UserWithToken} from '../models/User'
-import {LoginUserService, RegisterUserService} from '../services/UserService'
-import {UserNotificationPreferenceService} from '../services/NotificationPreferenceService'
-import {AuthMiddleware} from './AuthMiddleware'
-import {CustomRequest} from '../models/CustomRequest'
+import knex from '../../../config/knex'
+import {User, UpdateUser, UserWithToken} from '../../models/User'
+import {LoginUserService} from '../../services/user/LoginUserService'
+import {RegisterUserService} from '../../services/user/RegisterUserService'
+import {UserNotificationPreferenceService} from '../../services/NotificationPreferenceService'
+import {AuthMiddleware} from '../AuthMiddleware'
+import {CustomRequest} from '../../models/CustomRequest'
 
 const router = Router()
 
 export default router
 
-router.get('/me',
+router.get('/',
   AuthMiddleware.isLoggedIn,
   function(req: CustomRequest, res: Response, next: NextFunction) {
     res.send(req.user)
   }
 )
 
-router.get('/me/notificationPreferences',
+router.get('/notificationPreferences',
   AuthMiddleware.isLoggedIn,
   function(req: CustomRequest, res: Response, next: NextFunction) {
     UserNotificationPreferenceService.getByUser(req.user).then(userPreferences => {
@@ -26,7 +27,7 @@ router.get('/me/notificationPreferences',
   }
 )
 
-router.patch('/me',
+router.patch('/',
   AuthMiddleware.isLoggedIn,
   async function(req: CustomRequest, res: Response, next: NextFunction) {
     try {

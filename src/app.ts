@@ -1,7 +1,6 @@
 import * as cluster from 'cluster'
 import * as os from 'os'
 import * as dotenv from 'dotenv'
-import * as knex from 'knex'
 import {Server} from './Server'
 import environment from './config/environment'
 

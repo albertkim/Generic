@@ -1,13 +1,10 @@
-import * as jwt from 'jsonwebtoken'
 import * as createError from 'http-errors'
 import * as bcrypt from 'bcrypt-nodejs'
 import {User, CreateUser, UpdateUser, UserSearch} from '../models/User'
 import * as Knex from 'knex'
 import knex from '../../config/knex'
 
-const privateKey = 'genericPrivateKey'
-
-async function findById(userId: number, transaction?: Knex.Transaction) : Promise<User|undefined>{
+async function findById(userId: number, transaction?: Knex.Transaction): Promise<User|undefined>{
   const query = knex('user').where('id', userId)
   const result: any = transaction ? await query.transacting(transaction) : await query
   const resultArray = <Array<any>> result
@@ -18,7 +15,7 @@ async function findById(userId: number, transaction?: Knex.Transaction) : Promis
   }
 }
 
-async function getById(userId: number, transaction?: Knex.Transaction) : Promise<User> {
+async function getById(userId: number, transaction?: Knex.Transaction): Promise<User> {
   const user = await findById(userId, transaction)
   if (!user) {
     throw createError(404, `User ${userId} does not exist`)
@@ -27,7 +24,7 @@ async function getById(userId: number, transaction?: Knex.Transaction) : Promise
   }
 }
 
-async function findByEmail(email: string, transaction?: Knex.Transaction) : Promise<User|undefined> {
+async function findByEmail(email: string, transaction?: Knex.Transaction): Promise<User|undefined> {
   const query = knex('user').where('email', email)
   const result: any = transaction ? await query.transacting(transaction) : await query
   const resultArray = <Array<any>> result
@@ -48,7 +45,7 @@ export default {
 
   getByEmailAndPassword: async function(email: string, 
                                         password: string, 
-                                        transaction?: Knex.Transaction) : Promise<User> {
+                                        transaction?: Knex.Transaction): Promise<User> {
     const user = await findByEmail(email, transaction)
     if (!user || !bcrypt.compareSync(password, user.password)) {
       throw createError(401, 'Incorrect email or password')
@@ -65,7 +62,7 @@ export default {
     return users
   },
 
-  create: async function(userObject: CreateUser, transaction?: Knex.Transaction): Promise<User> {
+  create: async function(userObject: CreateUser, transaction: Knex.Transaction): Promise<User> {
     const createObject: any = JSON.parse(JSON.stringify(userObject)) // Clone userObject, don't modify it
     // Hash the password
     createObject.password = bcrypt.hashSync(userObject.password)
@@ -78,21 +75,7 @@ export default {
     return user
   },
 
-  createAuthToken: async function(userId: Number, transaction?: Knex.Transaction): Promise<string> {
-    const token = jwt.sign({
-      userId: userId,
-      createDate: new Date()
-    }, privateKey)
-    const query = knex('authToken').insert({
-      userId: userId,
-      token: token,
-      createDate: new Date()
-    })
-    transaction ? await query.transacting(transaction): await query
-    return token
-  },
-
-  updateUser: async function(updateObject: UpdateUser, transaction?: Knex.Transaction) {
+  updateUser: async function(updateObject: UpdateUser, transaction: Knex.Transaction) {
     const query = knex('user').where('id', updateObject.id).update(updateObject)
     transaction ? await query.transacting(transaction): await query
     return await getById(updateObject.id)
