@@ -29,21 +29,21 @@ create table emailVerification (
 	PRIMARY KEY (userId, token)
 );
 
-create table notificationPreferences (
+create table preferences (
 	id mediumint primary key not null auto_increment,
 	name varchar(255) not null,
 	category varchar(255) not null,
 	defaultValue tinyint(1) not null
 );
 
-insert into notificationPreferences (name, category, defaultValue)
+insert into preferences (name, category, defaultValue)
 	values ('Receive marketing emails', 'Email', 1);
-insert into notificationPreferences (name, category, defaultValue)
+insert into preferences (name, category, defaultValue)
 	values ('Receive new product emails', 'Email', 1);
 
-create table userNotificationPreferences (
-	notificationPreferenceId mediumint not null,
-	foreign key (notificationPreferenceId) references notificationPreferences (id),
+create table userPreferences (
+	preferenceId mediumint not null,
+	foreign key (preferenceId) references preferences (id),
 	userId mediumint not null,
 	foreign key (userId) references user (id),
 	value tinyint(1) not null

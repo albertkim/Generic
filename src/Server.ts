@@ -21,7 +21,9 @@ export class Server {
     this.app = express()
 
     this.app.use((req, res, next) => {
-      console.log(`${req.method} ${req.url}`)
+      if (req.method !== 'OPTIONS') {
+        console.log(`${req.method} ${req.url}`)
+      }
       next()
     })
     this.app.use(bodyParser.json())

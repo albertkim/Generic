@@ -1,3 +1,4 @@
+import * as createError from 'http-errors'
 import {Router} from 'express'
 import knex from '../../../config/knex'
 import {User, UpdateUser} from '../../models/User'
@@ -16,11 +17,32 @@ router.get('/',
   }
 )
 
-router.get('/notificationPreferences',
+router.get('/preferences',
   AuthMiddleware.isLoggedIn,
   function(req, res, next) {
     UserNotificationPreferenceService.getByUser(req.user).then(userPreferences => {
-      res.send(userPreferences)
+      res.send({
+        userPreferences: userPreferences
+      })
+    }).catch(next)
+  }
+)
+
+router.patch('/preferences',
+
+  AuthMiddleware.isLoggedIn,
+  function(req, res, next) {
+    if (req.body.preferenceId === undefined || req.body.value === undefined) {
+      return next(createError(400, `Preference id and value fields are required.`))
+    }
+    const preferenceId = parseInt(req.body.preferenceId)
+    const value = !!req.body.value
+    UserNotificationPreferenceService.update({
+      userId: req.user.id,
+      preferenceId: preferenceId,
+      value: value
+    }).then(() => {
+      res.send()
     }).catch(next)
   }
 )

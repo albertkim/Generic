@@ -1,4 +1,4 @@
-export class NotificationPreference {
+export class Preference {
   public id: number
   public name: string
   public category: string
@@ -12,14 +12,20 @@ export class NotificationPreference {
   }
 }
 
-export class UserNotificationPreference {
+export interface IUserPreferenceUpdate {
+  userId: number
+  preferenceId: number,
+  value: boolean
+}
+
+export class UserPreference {
   public userId: number
-  public preference: NotificationPreference
+  public preference: Preference
   public value: boolean
 
   constructor(json: any) {
     this.userId = json.userId
-    this.preference = new NotificationPreference(json.preference)
+    this.preference = new Preference(json.preference)
     this.value = !!json.value
   }
 }
