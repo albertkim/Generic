@@ -18,7 +18,7 @@ create table authToken (
 	foreign key (userId) references user (id),
 	token varchar(255) not null unique,
   createDate datetime not null,
-	PRIMARY KEY (userId, token)
+	primary key (userId, token)
 );
 
 create table emailVerification (
@@ -26,7 +26,7 @@ create table emailVerification (
 	foreign key (userId) references user (id),
 	token varchar(255) not null unique,
   createDate datetime not null,
-	PRIMARY KEY (userId, token)
+	primary key (userId, token)
 );
 
 create table preferences (
@@ -47,4 +47,23 @@ create table userPreferences (
 	userId mediumint not null,
 	foreign key (userId) references user (id),
 	value tinyint(1) not null
+);
+
+create table company (
+	id mediumint primary key not null auto_increment,
+	name varchar(266) not null,
+	description text,
+	isCompanyVerified tinyint(1) not null default 0,
+	primaryPhone varchar(255),
+	secondaryPhone varchar(255),
+	createDate datetime not null
+);
+
+create table companyUser (
+	companyId mediumint not null,
+	foreign key (companyId) references company (id),
+	userId mediumint not null,
+	foreign key (userId) references user (id),
+	primary key (companyId, userId),
+	role varchar(255) not null
 );
