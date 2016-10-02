@@ -5,6 +5,7 @@ import {User, UpdateUser} from '../../models/User'
 import {UserNotificationPreferenceService} from '../../services/NotificationPreferenceService'
 import {AuthMiddleware} from '../AuthMiddleware'
 import {UpdateUserService} from '../../services/user/UpdateUserService'
+import {CompanyUserService} from '../../services/company/CompanyUserService'
 
 const router = Router()
 
@@ -14,6 +15,16 @@ router.get('/',
   AuthMiddleware.isLoggedIn,
   function(req, res, next) {
     res.send(req.user)
+  }
+)
+
+router.get('/companies',
+  AuthMiddleware.isLoggedIn,
+  function(req, res, next) {
+    CompanyUserService.getByUser(req.user)
+    .then((companyUsers: any) => {
+      res.send(companyUsers)
+    }).catch(next)
   }
 )
 

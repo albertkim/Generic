@@ -6,6 +6,7 @@ create table user (
 	phone varchar(255),
 	phoneCountryCode varchar(50),
 	isPhoneVerified tinyint(1) not null default 0,
+	profileImageUrl varchar(500),
 	password varchar(100) not null,
 	facebookId varchar(50),
 	googleId varchar(50),
@@ -51,7 +52,8 @@ create table userPreferences (
 
 create table company (
 	id mediumint primary key not null auto_increment,
-	name varchar(266) not null,
+	logoImageUrl varchar(500),
+	name varchar(255) not null,
 	description text,
 	isCompanyVerified tinyint(1) not null default 0,
 	primaryPhone varchar(255),

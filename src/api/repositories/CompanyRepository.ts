@@ -1,6 +1,6 @@
 import * as createError from 'http-errors'
 import {User} from '../models/User'
-import {Company, ICreateCompany, IUpdateCompany, ICreateCompanyUser} from '../models/Company'
+import {Company, ICreateCompany, IUpdateCompany, ICreateCompanyUser, ICompanyUser} from '../models/Company'
 import * as Knex from 'knex'
 import knex from '../../config/knex'
 
@@ -39,17 +39,31 @@ export default {
     return company
   },
 
+  getCompanyUsersByUser: async function(user: User): Promise<ICompanyUser[]> {
+    const results: any[] = await knex('companyUser').where('userId', user.id)
+                                                   .leftJoin('company', 'companyUser.companyId', 'company.id')
+                                                   .options({nestTables: true})
+    const companyUsers = results.map(result => {
+      return {
+        user: user,
+        company: new Company(result.company),
+        role: result.companyUser.role
+      }
+    })
+    return companyUsers
+  },
+
   createCompanyUser: async function(companyUser: ICreateCompanyUser, transaction: Knex.Transaction) {
     await knex('companyUser').insert({
       userId: companyUser.user.id,
       companyId: companyUser.company.id,
       role: companyUser.role
-    })
+    }).transacting(transaction)
   },
 
   update: async function(updateObject: IUpdateCompany, transaction: Knex.Transaction) {
-    await knex('company').where('id', updateObject.id).update(updateObject)
-    return await getById(updateObject.id)
+    await knex('company').where('id', updateObject.id).update(updateObject).transacting(transaction)
+    return await getById(updateObject.id, transaction)
   }
 
 }

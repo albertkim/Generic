@@ -18,6 +18,12 @@ export interface ICreateCompanyUser {
   role: 'Owner' | 'Employee' | 'Guest'
 }
 
+export interface ICompanyUser {
+  user: User,
+  company: Company,
+  role: string
+}
+
 export class Company {
 
   public id: number
