@@ -1,3 +1,5 @@
+import {User} from './User'
+
 export interface ICreateCompany {
   name: string
 }
@@ -8,6 +10,12 @@ export interface IUpdateCompany {
   description?: string,
   primaryPhone?: string,
   secondaryPhone?: string,
+}
+
+export interface ICreateCompanyUser {
+  user: User,
+  company: Company,
+  role: 'Owner' | 'Employee' | 'Guest'
 }
 
 export class Company {

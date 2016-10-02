@@ -5,6 +5,7 @@ import knex from './config/knex'
 import AdminController from './api/controllers/AdminController'
 import UserController from './api/controllers/UserController'
 import LoginRegisterController from './api/controllers/LoginRegisterController'
+import CompanyController from './api/controllers/CompanyController'
 
 interface ServerOptions {
   port: number
@@ -44,10 +45,11 @@ export class Server {
     this.app.use('/api/:version', LoginRegisterController)
     this.app.use('/api/:version/admin', AdminController)
     this.app.use('/api/:version/user', UserController)
+    this.app.use('/api/:version/company', CompanyController)
 
     this.app.use(function(error: any, req: express.Request, res: express.Response, next: express.NextFunction) {
       console.log(error)
-      const statusCode = error.statusCode != undefined ? error.statusCode : 500
+      const statusCode = error.statusCode !== undefined ? error.statusCode : 500
       const message = error.message
       res.status(statusCode).send({message: message})
     })

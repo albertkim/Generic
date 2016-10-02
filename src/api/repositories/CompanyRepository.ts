@@ -1,5 +1,6 @@
 import * as createError from 'http-errors'
-import {Company, ICreateCompany, IUpdateCompany} from '../models/Company'
+import {User} from '../models/User'
+import {Company, ICreateCompany, IUpdateCompany, ICreateCompanyUser} from '../models/Company'
 import * as Knex from 'knex'
 import knex from '../../config/knex'
 
@@ -36,6 +37,14 @@ export default {
     const companyId = result[0]
     const company = await getById(companyId, transaction)
     return company
+  },
+
+  createCompanyUser: async function(companyUser: ICreateCompanyUser, transaction: Knex.Transaction) {
+    await knex('companyUser').insert({
+      userId: companyUser.user.id,
+      companyId: companyUser.company.id,
+      role: companyUser.role
+    })
   },
 
   update: async function(updateObject: IUpdateCompany, transaction: Knex.Transaction) {

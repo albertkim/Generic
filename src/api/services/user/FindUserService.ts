@@ -1,5 +1,4 @@
 import * as Knex from 'knex'
-import * as createError from 'http-errors'
 import {User, UserSearch} from '../../models/User'
 import UserRepository from '../../repositories/UserRepository'
 
